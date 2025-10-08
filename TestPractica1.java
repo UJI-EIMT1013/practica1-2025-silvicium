@@ -1,4 +1,4 @@
-package practica1;
+package practica1_2025_al448150;
 
 //import org.junit.Test;
 
