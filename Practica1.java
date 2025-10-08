@@ -3,6 +3,7 @@ package practica1_2025_al448150;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.ServiceConfigurationError;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -41,9 +42,9 @@ public class Practica1 {
         Set<Integer> nuevoCuadrado = new HashSet<Integer>();
         Set<Integer> nuevoNoCuadrado = new HashSet<Integer>();
 
-        boolean anadido = false;
         
         for (Integer x : union) { 
+            boolean anadido = false;
             
             for (Integer y : union) {
                 long yy = y*y; 
@@ -106,10 +107,43 @@ public class Practica1 {
     }
 
     //EJERCICIO 4
-    public static<T> Collection<Set<T>> coverageSet2 (Set<T> u,ArrayList<Set<T>> col) {
-        //TODO
-        return null;
+    public static<T> Collection<Set<T>> coverageSet2 (Set<T> u, ArrayList<Set<T>> col) {
+        ArrayList<Set<T>> lista = new ArrayList<>();
+        
+
+        //Añadimos todos los subconjuntos que pueden formar u
+        for (int i=0; i<col.size(); i++) {
+            Set<T> conjunto = col.get(i);
+
+            if (u.contains(conjunto)) {
+                conjunto.add(conjunto);
+            }
+        }
+
+
+        //Miramos si hemos podido formar una lista 
+        boolean esIgual = true;
+        if (!lista.equals(u)){
+            return new ArrayList<>(); //Si no podemos formar conjuntos devolvemos una vacia
+        }
+
+        //Filtramos los subconjuntos repetidos
+        for (int i=0; i<lista.size(); i++) { 
+            Set<T> conjunto1 = lista.get(i);
+
+            for(int x=i+1; x<lista.size(); x++) {
+                Set<T> conjunto2 = lista.get(x);
+                
+                if (conjunto1.equals(conjunto2)) {//Esta repetido
+                    lista.get(x).remove();
+                }
+            }
+        }
+
+
+
+        if (esIgual) {
+            return lista;
+        }
     }
-
-
 }
