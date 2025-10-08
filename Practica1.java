@@ -79,8 +79,30 @@ public class Practica1 {
 
     //EJERCICIO 3
     public static<T> Collection<Set<T>> divideInSets (Iterator<T> it) {
-        //TODO
-        return null;
+        //Podemos usar un ArrayList<> pq es una implementacion de la interfaz Collection<> 
+        //Set<T> no ordenado, no se puede repeticiones
+        ArrayList<Set<T>> coleccion = new ArrayList<>();
+        
+        while (it.hasNext()) {
+            T elem = it.next();
+            boolean colocado = false;
+
+            for (Set<T> s : coleccion) {
+                if (!s.contains(elem)) {
+                    s.add(elem);
+                    colocado = true;
+                    break;
+                }
+            }
+
+            if (!colocado) {
+                HashSet<T> nuevo = new HashSet<>();
+                nuevo.add(elem);
+                coleccion.add(nuevo);
+            }
+
+        }
+        return coleccion;
     }
 
     //EJERCICIO 4
