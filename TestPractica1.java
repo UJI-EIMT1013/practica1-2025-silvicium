@@ -7,7 +7,7 @@ import java.util.*;
 import static org.junit.Assert.*;
 //import static practica1.Practica1.*;
 import practica1-2025-silvicium.Practica1;
-
+//S
 
 public class TestPractica1 {
     private final Integer[] conjuntoTest1 = {1, 2, 3};
