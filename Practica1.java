@@ -11,8 +11,8 @@ public class Practica1 {
 
     //EJERCICIO 1
     public static Set<Integer> multiplos (Iterator<Integer> it) {
-        Set<Integer> vistos = new Set<Integer>(); 
-        Set<Integer> res = new Set<Integer>();
+        Set<Integer> vistos = new HashSet< Integer>(); 
+        Set<Integer> res = new  HashSet<Integer>();
 
         while (it.hasNext()) {
             int numActual = it.next();
@@ -39,32 +39,33 @@ public class Practica1 {
         union.addAll(cuadrados); //Añadimos cuadrados a union
         union.addAll(noCuadrados); //Añadimos noCuadrados a union
 
-        Set<Integer> nuevoCuadrado = new HashSet<Integer>();
-        Set<Integer> nuevoNoCuadrado = new HashSet<Integer>();
+        Set<Integer> nuevoCuadrado = new HashSet<>();
+        Set<Integer> nuevoNoCuadrado = new HashSet<>();
 
         
         for (Integer x : union) { 
-            boolean anadido = false;
+            boolean anadido = false; //Booleano para saber si se ha añadido
             
             for (Integer y : union) {
-                long yy = y*y; 
-                x.longValue(); //Convertimos x a long para tener suficiente espacio
-             
-                if ( yy == x.longValue() &&  !y.equals(x)) { //Gastamos .equals() para la comparacion de objetos
-                    nuevoCuadrado.add(x); 
+                long yy = y*y;  //Numero maximo de int 2.147.483.647 y 10^10 = 10.000.000.000
+                
+                // .longValue() es un metodo que devuelve un long 
+                if ( yy == x.longValue() &&  !y.equals(x)) { //Gastamos .equals() para la comparacion de objetos 
                     anadido = true;
                     break;
 
-                }else if ( yy == x && y.equals(x)) {
+                }else if ( yy == x && y.equals(x)) { //Comprobacion de que si el numero x=y y esta contenido en ambos se añade
                     if (cuadrados.contains(x) && noCuadrados.contains(x)) {
-                        nuevoCuadrado.add(x);
                         anadido = true;
                         break;
                     }
                 }
             }
 
-            if(!anadido) {
+            //Comprobacion de que lista tiene que ir el numero
+            if(anadido) {
+                nuevoCuadrado.add(x);
+            }else {
                 nuevoNoCuadrado.add(x);
             }
         }
@@ -97,7 +98,7 @@ public class Practica1 {
             }
 
             if (!colocado) {
-                HashSet<T> nuevo = new HashSet<>();
+                Set<T> nuevo = new HashSet<>();
                 nuevo.add(elem);
                 coleccion.add(nuevo);
             }
