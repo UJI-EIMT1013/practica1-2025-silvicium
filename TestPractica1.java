@@ -5,7 +5,8 @@ package practica1_2025_al448150;
 import java.util.*;
 
 import static org.junit.Assert.*;
-import static practica1.Practica1.*;
+//import static practica1.Practica1.*;
+import practica1-2025-silvicium.Practica1;
 
 
 public class TestPractica1 {

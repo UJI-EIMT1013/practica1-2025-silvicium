@@ -3,7 +3,6 @@ package practica1_2025_al448150;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.ServiceConfigurationError;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -11,16 +10,16 @@ public class Practica1 {
 
     //EJERCICIO 1
     public static Set<Integer> multiplos (Iterator<Integer> it) {
-        Set<Integer> vistos = new HashSet< Integer>(); 
+        Set<Integer> vistos = new HashSet< Integer>();
         Set<Integer> res = new  HashSet<Integer>();
 
         while (it.hasNext()) {
             int numActual = it.next();
 
             if (numActual == 0) continue;
-            
+
             for (Integer numVist : vistos) {
-                
+
                 if ((numActual % numVist) == 0) { //Si numActual/numVist el resto es 0, es multiplo
                     res.add(numActual);
                 }else if ( (numVist % numActual) == 0) { //Si numVist/numActual el resto es 0, es multiplo
@@ -34,7 +33,7 @@ public class Practica1 {
 
     //EJERCICIO2
     public static void separate (Set<Integer> cuadrados, Set<Integer> noCuadrados)  {
-        
+
         Set<Integer> union = new HashSet<Integer>();
         union.addAll(cuadrados); //Añadimos cuadrados a union
         union.addAll(noCuadrados); //Añadimos noCuadrados a union
@@ -42,15 +41,15 @@ public class Practica1 {
         Set<Integer> nuevoCuadrado = new HashSet<>();
         Set<Integer> nuevoNoCuadrado = new HashSet<>();
 
-        
-        for (Integer x : union) { 
+
+        for (Integer x : union) {
             boolean anadido = false; //Booleano para saber si se ha añadido
-            
+
             for (Integer y : union) {
                 long yy = y*y;  //Numero maximo de int 2.147.483.647 y 10^10 = 10.000.000.000
-                
-                // .longValue() es un metodo que devuelve un long 
-                if ( yy == x.longValue() &&  !y.equals(x)) { //Gastamos .equals() para la comparacion de objetos 
+
+                // .longValue() es un metodo que devuelve un long
+                if ( yy == x.longValue() &&  !y.equals(x)) { //Gastamos .equals() para la comparacion de objetos
                     anadido = true;
                     break;
 
@@ -81,10 +80,10 @@ public class Practica1 {
 
     //EJERCICIO 3
     public static<T> Collection<Set<T>> divideInSets (Iterator<T> it) {
-        //Podemos usar un ArrayList<> pq es una implementacion de la interfaz Collection<> 
+        //Podemos usar un ArrayList<> pq es una implementacion de la interfaz Collection<>
         //Set<T> no ordenado, no se puede repeticiones
         ArrayList<Set<T>> coleccion = new ArrayList<>();
-        
+
         while (it.hasNext()) {
             T elem = it.next();
             boolean colocado = false;
@@ -108,43 +107,31 @@ public class Practica1 {
     }
 
     //EJERCICIO 4
-    public static<T> Collection<Set<T>> coverageSet2 (Set<T> u, ArrayList<Set<T>> col) {
-        ArrayList<Set<T>> lista = new ArrayList<>();
-        
+    public static<T> Collection<Set<T>> coverageSet2 (Set<T> u,ArrayList<Set<T>> col) {
 
-        //Añadimos todos los subconjuntos que pueden formar u
-        for (int i=0; i<col.size(); i++) {
-            Set<T> conjunto = col.get(i);
+        Set<Set<T>> resultadoUnion = new HashSet<>();
 
-            if (u.contains(conjunto)) {
-                conjunto.add(conjunto);
-            }
-        }
+        for (int i = 0; i < col.size(); i++) {
+            Set<T> primero = col.get(i);
 
+            if (!primero.equals(u)) // Si hay algun conjunto de col que sea igual a u lo ignoramos
 
-        //Miramos si hemos podido formar una lista 
-        boolean esIgual = true;
-        if (!lista.equals(u)){
-            return new ArrayList<>(); //Si no podemos formar conjuntos devolvemos una vacia
-        }
+                for (int j = i+1; j < col.size(); j++) {
+                    Set<T> segundo = col.get(j);
 
-        //Filtramos los subconjuntos repetidos
-        for (int i=0; i<lista.size(); i++) { 
-            Set<T> conjunto1 = lista.get(i);
+                    if (!segundo.equals(u)) { //Ignoramos culaquier conjunto igual a u
+                        //Creamos la union y añadimos los elementos
+                        Set<T> unionElementos = new HashSet<>();
+                        unionElementos.addAll(primero);
+                        unionElementos.addAll(segundo);
 
-            for(int x=i+1; x<lista.size(); x++) {
-                Set<T> conjunto2 = lista.get(x);
-                
-                if (conjunto1.equals(conjunto2)) {//Esta repetido
-                    lista.get(x).remove();
+                        if (unionElementos.equals(u)) { //Set redefine el metodo equals en el cual importa el contenido
+                            resultadoUnion.add(primero);
+                            resultadoUnion.add(segundo);
+                        }
+                    }
                 }
-            }
         }
-
-
-
-        if (esIgual) {
-            return lista;
-        }
+        return resultadoUnion;
     }
 }
